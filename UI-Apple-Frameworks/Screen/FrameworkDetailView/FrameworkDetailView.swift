@@ -10,25 +10,10 @@ import SwiftUI
 struct FrameworkDetailView: View {
     var framework: Framework!
     
-    @Binding var isShowDetailView:Bool
     @State private var isShowingSafariView = false
     var body: some View {
        
         VStack{
-            HStack{
-                Spacer()
-                Button{
-                    isShowDetailView = false
-                }label: {
-                    Image(systemName: "xmark")
-                        .foregroundColor(Color(.label))
-                        .imageScale(.large)
-                        .frame(width: 44, height: 44)
-                }
-            }
-            .padding()
-            
-            Spacer()
             FrameworkTitleView(framework: framework)
             Text(framework.description)
                 .padding()
@@ -38,8 +23,12 @@ struct FrameworkDetailView: View {
             Button{
                 isShowingSafariView = true
             }label: {
-                AFButton(title: "Learn More")
+//                AFButton(title: "Learn More")
+                Label("Learn More", systemImage: "book.fill")
             }
+            .buttonStyle(.borderedProminent)
+            .controlSize(.large)
+            .tint(.red)
         }
         .fullScreenCover(isPresented: $isShowingSafariView, content:{
             SafariView(url: URL(string: framework.urlString) ?? URL(string: "www.apple.com")!)
@@ -48,5 +37,5 @@ struct FrameworkDetailView: View {
 }
 
 #Preview {
-    FrameworkDetailView(framework: MockData.sampleFramework, isShowDetailView: .constant(false)).preferredColorScheme(.dark)
+    FrameworkDetailView(framework: MockData.sampleFramework).preferredColorScheme(.dark)
 }
